@@ -1,6 +1,6 @@
 # Python Testing with pytest Examples
 
-This repository contains examples from the book "Python Testing with pytest" by Brian Okken. The book explores pytest, Python's powerful testing framework, and demonstrates its various features and capabilities.
+This repository contains examples from the book "[Python Testing with pytest]()" by Brian Okken. The book explores pytest, Python's powerful testing framework, and demonstrates its various features and capabilities.
 
 ## Book Summary
 
