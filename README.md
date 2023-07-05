@@ -1,6 +1,4 @@
-## [![CI](https://github.com/difegam/python-testing/actions/workflows/ci.yaml/badge.svg)](https://github.com/difegam/python-testing/actions/workflows/ci.yaml)
-
----
+[![Python Testing CI/CD](https://github.com/difegam/python-testing/actions/workflows/ci.yaml/badge.svg)](https://github.com/difegam/python-testing/actions/workflows/ci.yaml)
 
 # Python Testing with pytest Examples
 
