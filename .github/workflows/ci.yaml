@@ -47,6 +47,7 @@ jobs:
       - name: Install library
         run: poetry install --no-interaction
 
-      - run: |
+      - name: Run tests
+        run: |
           source $VENV
-          pytest --version
+          pytest tests/
