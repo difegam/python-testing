@@ -3,9 +3,10 @@ set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 
 alias i := install
 alias t := test
+alias pcheck := pre-commit-check
 
 # Available recipes
-@default:
+_default:
     @just --list --unsorted --list-prefix "    > " --justfile {{justfile()}}
 
 # Init project
@@ -23,6 +24,9 @@ pre-commit-check:
 
 install:
     pip install pre-commit
+
+requirements env="PRD":
+    poetry export -f requirements.txt -o requirements.txt --without-hashes {{ if env == "DEV" { "--dev" } else {" "} }}
 
 # Install Poetry - Linux & macOS
 [unix]
