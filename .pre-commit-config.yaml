@@ -25,6 +25,12 @@ repos:
     -   id: pyupgrade
         args: [--py310-plus, --keep-runtime-typing]
 
+  - repo: https://github.com/asottile/add-trailing-comma
+    rev: v3.0.0
+    hooks:
+    - id: add-trailing-comma
+      args: [--py36-plus]
+
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.0.275
     hooks:
@@ -60,5 +66,6 @@ repos:
     hooks:
       - id: poetry-check
       - id: poetry-lock
+        args: ["--no-update"]
       # - id: poetry-export
       #   args: ["-f", "requirements.txt", "-o", "requirements.txt"]
