@@ -49,6 +49,7 @@ repos:
       name: mypy
       language: system
       types: [python]
+      exclude: ^tests/
       entry: poetry run mypy --config pyproject.toml
       args:
       - --python-version
