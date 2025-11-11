@@ -1,49 +1,51 @@
 set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
-# set dotenv-load := true
+set dotenv-load := true
 
 alias i := install
 alias t := test
-alias pcheck := pre-commit-check
+alias l := lint
+alias c := check
 
 # Available recipes
-_default:
-    @just --list --unsorted --list-prefix "    > " --justfile {{justfile()}}
+@_:
+    just --list
 
-# Init project
-init:
-    poetry-install
+# Ensure project virtualenv is up to date
+[group("development")]
+install:
+    @echo "📦 Installing the application for development"
+    uv sync --all-groups
+    uv run pre-commit install
+    @echo "\n✅ Setup complete, ready to code 🚀"
+
+# Run linter and formatter
+[group("qa")]
+lint:
+    uv run ruff check --unsafe-fixes
+    uv run ruff format
+
+# Run pre-commit hooks on all files
+[group('qa')]
+check:
+    @echo "Running pre-commit hooks on all files"
+    @uv run pre-commit run --all-files
 
 # Run tests
+[group('testing')]
 test:
     @echo "Testing app...!\n"
-    poetry run pytest tests/
-
-# Manually run all pre-commit hooks on repository
-pre-commit-check:
-    pre-commit run --all-files
-
-install:
-    pip install pre-commit
-
-requirements env="PRD":
-    poetry export -f requirements.txt -o requirements.txt --without-hashes {{ if env == "DEV" { "--dev" } else {" "} }}
+    uv run pytest tests/
 
 # Install Poetry - Linux & macOS
+[group("installation")]
 [unix]
-poetry-install:
-    curl -sSL https://install.python-poetry.org | python3 -
+uv-install:
+    # On macOS and Linux.
+    curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Install Poetry - Windows (Powershell)
+[group("installation")]
 [windows]
-poetry-install:
-    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-
-# Just Programmer's Manual
-[windows]
-@help command="just":
-    start {{ if command == "just" { "https://just.systems/man/en/" } else if command == "poetry" { "https://python-poetry.org/docs/" } else { "https://www.google.com/" } }}
-    echo "help - {{command}}"
-# Just Programmer's Manual
-[unix]
-@help:
-    start https://just.systems/man/en/
+uv-install:
+    # On Windows.
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
